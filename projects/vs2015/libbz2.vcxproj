@@ -118,44 +118,44 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
-    <TargetName>libbz2d</TargetName>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
-    <TargetName>libbz2d</TargetName>
+    <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
-    <TargetName>libbz2</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
-    <TargetName>libbz2</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>libbz2d</TargetName>
+    <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>libbz2d</TargetName>
+    <TargetName>$(ProjectName)d</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>libbz2</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>libbz2</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -164,7 +164,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -180,10 +180,19 @@
       <OutputFile>$(OutDir)lib\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -193,7 +202,7 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <ProgramDataBaseFileName>$(OutDir)lib\$(TargetName).pdb</ProgramDataBaseFileName>
@@ -208,10 +217,19 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <OutputFile>$(OutDir)lib\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
@@ -221,28 +239,37 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
-      <ModuleDefinitionFile>..\libbz2d.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\..\resources\main\libbz2.def</ModuleDefinitionFile>
       <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
       <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
       <LargeAddressAware>true</LargeAddressAware>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
@@ -252,10 +279,10 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
@@ -263,15 +290,24 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
       <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
-      <ModuleDefinitionFile>..\libbz2d.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\..\resources\main\libbz2.def</ModuleDefinitionFile>
       <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -292,7 +328,7 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
@@ -312,10 +348,19 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <OutputFile>$(OutDir)lib\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -335,7 +380,7 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
@@ -354,10 +399,19 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <OutputFile>$(OutDir)lib\$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
@@ -378,10 +432,10 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -389,16 +443,25 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
       <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
-      <ModuleDefinitionFile>..\libbz2.def</ModuleDefinitionFile>
-      <ProfileGuidedDatabase>$(OutDir)\bin\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ModuleDefinitionFile>..\..\resources\main\libbz2.def</ModuleDefinitionFile>
+      <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
@@ -418,10 +481,10 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -430,42 +493,40 @@ copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
       <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
       <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
-      <ModuleDefinitionFile>..\libbz2.def</ModuleDefinitionFile>
-      <ProfileGuidedDatabase>$(OutDir)\bin\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ModuleDefinitionFile>..\..\resources\main\libbz2.def</ModuleDefinitionFile>
+      <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir $(OutDir)\include
-copy ..\bzlib.h $(OutDir)\include
-mkdir $(OutDir)\licenses
-copy ..\LICENSE $(OutDir)\licenses\bzip2.txt</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_DINC=$(OutDir)include\"
+SET "_SINC=$(ProjectDir)..\..\include\"
+SET "_DLIC=$(OutDir)licenses\$(ProjectName).txt"
+SET "_SLIC=$(ProjectDir)..\..\LICENSE"
+
+IF NOT EXIST "%_DINC%" MKDIR "%_DINC%"
+FC /L "%_SINC%bzlib.h" "%_DINC%bzlib.h" &gt;nul 2&gt;&amp;1 || COPY "%_SINC%bzlib.h" "%_DINC%bzlib.h"
+
+IF NOT EXIST "$(OutDir)licenses" MKDIR "$(OutDir)licenses"
+FC /L "%_SLIC%" "%_DLIC%" &gt;nul 2&gt;&amp;1 || COPY "%_SLIC%" "%_DLIC%"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\blocksort.c" />
-    <ClCompile Include="..\bzlib.c" />
-    <ClCompile Include="..\compress.c" />
-    <ClCompile Include="..\crctable.c" />
-    <ClCompile Include="..\decompress.c" />
-    <ClCompile Include="..\huffman.c" />
-    <ClCompile Include="..\randtable.c" />
+    <ClCompile Include="..\..\src\main\blocksort.c" />
+    <ClCompile Include="..\..\src\main\bzlib.c" />
+    <ClCompile Include="..\..\src\main\compress.c" />
+    <ClCompile Include="..\..\src\main\crctable.c" />
+    <ClCompile Include="..\..\src\main\decompress.c" />
+    <ClCompile Include="..\..\src\main\huffman.c" />
+    <ClCompile Include="..\..\src\main\randtable.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\bzlib.h" />
-    <ClInclude Include="..\bzlib_private.h" />
+    <ClInclude Include="..\..\include\bzlib.h" />
+    <ClInclude Include="..\..\include\bzlib_private.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\libbz2.def">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </None>
-    <None Include="..\libbz2d.def">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
+    <None Include="..\..\resources\main\libbz2.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

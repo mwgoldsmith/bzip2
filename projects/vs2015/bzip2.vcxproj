@@ -120,57 +120,59 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <TargetName>$(ProjectName)-mdd</TargetName>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <TargetName>$(ProjectName)-mdd</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <TargetName>$(ProjectName)-md</TargetName>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <TargetName>$(ProjectName)-md</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)-mtd</TargetName>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)-mtd</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>$(ProjectName)-mt</TargetName>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
     <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)-mt</TargetName>
     <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(SolutionDir)\obj\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <Optimization>Disabled</Optimization>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutDir)\lib\$(TargetName).pdb</ProgramDataBaseFileName>
-      <MinimalRebuild />
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -182,45 +184,48 @@
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
-@echo All six of the fc's should find no differences.
-@echo If fc finds an error on sample3.bz2, this could be
-@echo because WinZip's 'TAR file smart CR/LF conversion'
-@echo is too clever for its own good.  Disable this option.
-@echo The correct size for sample3.ref is 120,244.  If it
-@echo is 150,251, WinZip has messed it up.
-SET PASS=TRUE
-fc ..\sample1.bz2 ..\sample1.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample2.bz2 ..\sample2.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample3.bz2 ..\sample3.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample1.tst ..\sample1.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample2.tst ..\sample2.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample3.tst ..\sample3.ref &amp;&amp; SET PASS=FALSE
-IF PASS == TRUE (
-  @ECHO Tests passed
-) ELSE (
-  @ECHO Tests FAILED!!
-)</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
+
+type "%_TDIR%words1"
+
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
+
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
+
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(OutDir)\lib\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
@@ -231,54 +236,49 @@ IF PASS == TRUE (
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
-@echo All six of the fc's should find no differences.
+type "%_TDIR%words1"
 
-@echo If fc finds an error on sample3.bz2, this could be
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
 
-@echo because WinZip's 'TAR file smart CR/LF conversion'
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
 
-@echo is too clever for its own good.  Disable this option.
-
-@echo The correct size for sample3.ref is 120,244.  If it
-
-@echo is 150,251, WinZip has messed it up.
-
-fc ..\sample1.bz2 ..\sample1.rb2 
-
-fc ..\sample2.bz2 ..\sample2.rb2
-
-fc ..\sample3.bz2 ..\sample3.rb2
-
-fc ..\sample1.tst ..\sample1.ref
-
-fc ..\sample2.tst ..\sample2.ref
-
-fc ..\sample3.tst ..\sample3.ref
-</Command>
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <Optimization>Disabled</Optimization>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -294,46 +294,48 @@ fc ..\sample3.tst ..\sample3.ref
       <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
-@echo All six of the fc's should find no differences.
-@echo If fc finds an error on sample3.bz2, this could be
-@echo because WinZip's 'TAR file smart CR/LF conversion'
-@echo is too clever for its own good.  Disable this option.
-@echo The correct size for sample3.ref is 120,244.  If it
-@echo is 150,251, WinZip has messed it up.
-SET PASS=TRUE
-fc ..\sample1.bz2 ..\sample1.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample2.bz2 ..\sample2.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample3.bz2 ..\sample3.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample1.tst ..\sample1.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample2.tst ..\sample2.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample3.tst ..\sample3.ref &amp;&amp; SET PASS=FALSE
-IF PASS == TRUE (
-  @ECHO Tests passed
-) ELSE (
-  @ECHO Tests FAILED!!
-)</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
+
+type "%_TDIR%words1"
+
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
+
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
+
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -348,65 +350,60 @@ IF PASS == TRUE (
       <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
-@echo All six of the fc's should find no differences.
+type "%_TDIR%words1"
 
-@echo If fc finds an error on sample3.bz2, this could be
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
 
-@echo because WinZip's 'TAR file smart CR/LF conversion'
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
 
-@echo is too clever for its own good.  Disable this option.
-
-@echo The correct size for sample3.ref is 120,244.  If it
-
-@echo is 150,251, WinZip has messed it up.
-
-fc ..\sample1.bz2 ..\sample1.rb2 
-
-fc ..\sample2.bz2 ..\sample2.rb2
-
-fc ..\sample3.bz2 ..\sample3.rb2
-
-fc ..\sample1.tst ..\sample1.ref
-
-fc ..\sample2.tst ..\sample2.ref
-
-fc ..\sample3.tst ..\sample3.ref
-</Command>
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <MinimalRebuild />
+      <Optimization>MaxSpeed</Optimization>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
@@ -419,56 +416,59 @@ fc ..\sample3.tst ..\sample3.ref
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
-@echo All six of the fc's should find no differences.
-@echo If fc finds an error on sample3.bz2, this could be
-@echo because WinZip's 'TAR file smart CR/LF conversion'
-@echo is too clever for its own good.  Disable this option.
-@echo The correct size for sample3.ref is 120,244.  If it
-@echo is 150,251, WinZip has messed it up.
-SET PASS=TRUE
-fc ..\sample1.bz2 ..\sample1.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample2.bz2 ..\sample2.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample3.bz2 ..\sample3.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample1.tst ..\sample1.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample2.tst ..\sample2.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample3.tst ..\sample3.ref &amp;&amp; SET PASS=FALSE
-IF PASS == TRUE (
-  @ECHO Tests passed
-) ELSE (
-  @ECHO Tests FAILED!!
-)</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
+
+type "%_TDIR%words1"
+
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
+
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
+
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <InterproceduralOptimization>SingleFile</InterproceduralOptimization>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
@@ -481,63 +481,59 @@ IF PASS == TRUE (
       <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
-@echo All six of the fc's should find no differences.
+type "%_TDIR%words1"
 
-@echo If fc finds an error on sample3.bz2, this could be
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
 
-@echo because WinZip's 'TAR file smart CR/LF conversion'
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
 
-@echo is too clever for its own good.  Disable this option.
-
-@echo The correct size for sample3.ref is 120,244.  If it
-
-@echo is 150,251, WinZip has messed it up.
-
-fc ..\sample1.bz2 ..\sample1.rb2 
-
-fc ..\sample2.bz2 ..\sample2.rb2
-
-fc ..\sample3.bz2 ..\sample3.rb2
-
-fc ..\sample1.tst ..\sample1.ref
-
-fc ..\sample2.tst ..\sample2.ref
-
-fc ..\sample3.tst ..\sample3.ref
-</Command>
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -554,55 +550,58 @@ fc ..\sample3.tst ..\sample3.ref
       <AdditionalDependencies>libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
-@echo All six of the fc's should find no differences.
-@echo If fc finds an error on sample3.bz2, this could be
-@echo because WinZip's 'TAR file smart CR/LF conversion'
-@echo is too clever for its own good.  Disable this option.
-@echo The correct size for sample3.ref is 120,244.  If it
-@echo is 150,251, WinZip has messed it up.
-SET PASS=TRUE
-fc ..\sample1.bz2 ..\sample1.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample2.bz2 ..\sample2.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample3.bz2 ..\sample3.rb2 &amp;&amp; SET PASS=FALSE
-fc ..\sample1.tst ..\sample1.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample2.tst ..\sample2.ref &amp;&amp; SET PASS=FALSE
-fc ..\sample3.tst ..\sample3.ref &amp;&amp; SET PASS=FALSE
-IF PASS == TRUE (
-  @ECHO Tests passed
-) ELSE (
-  @ECHO Tests FAILED!!
-)</Command>
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
+
+type "%_TDIR%words1"
+
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
+
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
+
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ExceptionHandling>false</ExceptionHandling>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
-      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FILE_OFFSET_BITS=64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>false</ExceptionHandling>
+      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -618,51 +617,45 @@ IF PASS == TRUE (
       <AdditionalDependencies>libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-type ..\words1
-$(OutDir)bin\$(TargetName)$(TargetExt)  &lt; ..\sample1.ref &gt; ..\sample1.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -2  &lt; ..\sample2.ref &gt; ..\sample2.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -3  &lt; ..\sample3.ref &gt; ..\sample3.rb2
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample1.bz2 &gt; ..\sample1.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -d  &lt; ..\sample2.bz2 &gt; ..\sample2.tst
-$(OutDir)bin\$(TargetName)$(TargetExt) -ds &lt; ..\sample3.bz2 &gt; ..\sample3.tst
+      <Command>@ECHO OFF
+SETLOCAL
+SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
-@echo All six of the fc's should find no differences.
+type "%_TDIR%words1"
 
-@echo If fc finds an error on sample3.bz2, this could be
+"%_BIN%" -1 &lt;  "%_TDIR%sample1.ref" &gt; "%_TDIR%sample1.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample1.bz2"&gt;"%_TDIR%sample1.tst"
+fc "%_TDIR%sample1.bz2" "%_TDIR%sample1.rb2" 
+fc "%_TDIR%sample1.tst" "%_TDIR%sample1.ref"
+del "%_TDIR%sample1.rb2"
+del "%_TDIR%sample1.tst"
 
-@echo because WinZip's 'TAR file smart CR/LF conversion'
+"%_BIN%" -2  &lt; "%_TDIR%sample2.ref" &gt; "%_TDIR%sample2.rb2"
+"%_BIN%" -d  &lt; "%_TDIR%sample2.bz2" &gt; "%_TDIR%sample2.tst"
+fc "%_TDIR%sample2.bz2" "%_TDIR%sample2.rb2"
+fc "%_TDIR%sample2.tst" "%_TDIR%sample2.ref"
+del "%_TDIR%sample2.rb2"
+del "%_TDIR%sample2.tst"
 
-@echo is too clever for its own good.  Disable this option.
-
-@echo The correct size for sample3.ref is 120,244.  If it
-
-@echo is 150,251, WinZip has messed it up.
-
-fc ..\sample1.bz2 ..\sample1.rb2 
-
-fc ..\sample2.bz2 ..\sample2.rb2
-
-fc ..\sample3.bz2 ..\sample3.rb2
-
-fc ..\sample1.tst ..\sample1.ref
-
-fc ..\sample2.tst ..\sample2.ref
-
-fc ..\sample3.tst ..\sample3.ref
-</Command>
+"%_BIN%" -3  &lt; "%_TDIR%sample3.ref" &gt; "%_TDIR%sample3.rb2"
+"%_BIN%" -ds &lt; "%_TDIR%sample3.bz2" &gt; "%_TDIR%sample3.tst"
+fc "%_TDIR%sample3.bz2" "%_TDIR%sample3.rb2"
+fc "%_TDIR%sample3.tst" "%_TDIR%sample3.ref"
+del "%_TDIR%sample3.rb2"
+del "%_TDIR%sample3.tst"
+ENDLOCAL</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\bzip2.c" />
+    <ClCompile Include="..\..\src\main\bzip2.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\bzlib.h" />
-    <ClInclude Include="..\bzlib_private.h" />
+    <ClInclude Include="..\..\include\bzlib.h" />
+    <ClInclude Include="..\..\include\bzlib_private.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\libbz2.def" />
-    <None Include="..\libbz2d.def" />
+    <None Include="..\..\resources\main\libbz2.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
