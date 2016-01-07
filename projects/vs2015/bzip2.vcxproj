@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="DebugDLL|Win32">
-      <Configuration>DebugDLL</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugDLL|x64">
-      <Configuration>DebugDLL</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugDLL|Win32">
+      <Configuration>DebugDLL</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseDLL|Win32">
       <Configuration>ReleaseDLL</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseDLL|x64">
-      <Configuration>ReleaseDLL</Configuration>
+    <ProjectConfiguration Include="DebugDLL|x64">
+      <Configuration>DebugDLL</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
+    <ProjectConfiguration Include="ReleaseDLL|x64">
+      <Configuration>ReleaseDLL</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -41,124 +41,134 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
-    <TargetName>$(ProjectName)-mdd</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
-    <TargetName>$(ProjectName)-mdd</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
-    <TargetName>$(ProjectName)-md</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
-    <TargetName>$(ProjectName)-md</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)-mtd</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)-mtd</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>$(ProjectName)-mt</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc32\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)-mt</TargetName>
-    <OutDir>$(ProjectDir)..\..\..\msvc64\</OutDir>
-    <IntDir>$(OutDir)obj\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
+    <TargetName>bzip2d-mdd</TargetName>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
+    <TargetName>bzip2d-mdd</TargetName>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
+    <TargetName>bzip2-md</TargetName>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
+    <TargetName>bzip2-md</TargetName>
+    <OutDir>$(ProjectDir)..\..\..\..\build\msvc\</OutDir>
+    <IntDir>$(OutDir)obj\$(PlatformTarget)\$(Configuration)\$(ConfigurationType)\$(ProjectName)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -170,23 +180,23 @@
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <AdditionalLibraryDirectories>$(OutDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>$(OutDir)bin\$(PlatformTarget)\$(TargetName).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -223,22 +233,22 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -276,27 +286,27 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
-      <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
+      <ProfileGuidedDatabase>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ImportLibrary>$(OutDir)bin\$(PlatformTarget)\$(TargetName).lib</ImportLibrary>
       <LargeAddressAware>true</LargeAddressAware>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OutDir)bin\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)bin\$(PlatformTarget)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -333,26 +343,26 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>$(OutDir)bin\$(PlatformTarget)\$(TargetName).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ProfileGuidedDatabase>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pgd</ProfileGuidedDatabase>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OutDir)bin\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libbz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)bin\$(PlatformTarget)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bz2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -401,7 +411,7 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -409,16 +419,16 @@ ENDLOCAL</Command>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -466,7 +476,7 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -474,16 +484,16 @@ ENDLOCAL</Command>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir)lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -531,7 +541,7 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -539,20 +549,20 @@ ENDLOCAL</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>$(OutDir)bin\$(PlatformTarget)\$(TargetName).lib</ImportLibrary>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pgd</ProfileGuidedDatabase>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalLibraryDirectories>$(OutDir)bin\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir)lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
@@ -599,7 +609,7 @@ ENDLOCAL</Command>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>false</ExceptionHandling>
-      <ProgramDataBaseFileName>$(OutDir)bin\$(TargetName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <MinimalRebuild>false</MinimalRebuild>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -607,19 +617,19 @@ ENDLOCAL</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)bin\$(TargetName)$(TargetExt)</OutputFile>
-      <ImportLibrary>$(OutDir)bin\$(TargetName).lib</ImportLibrary>
-      <ProgramDatabaseFile>$(OutDir)bin\$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)</OutputFile>
+      <ImportLibrary>$(OutDir)bin\$(PlatformTarget)\$(TargetName).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <ProfileGuidedDatabase>$(OutDir)bin\$(TargetName).pgd</ProfileGuidedDatabase>
-      <AdditionalLibraryDirectories>$(OutDir)bin\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libbz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProfileGuidedDatabase>$(OutDir)bin\$(PlatformTarget)\$(TargetName).pgd</ProfileGuidedDatabase>
+      <AdditionalLibraryDirectories>$(OutDir)lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bz2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>@ECHO OFF
 SETLOCAL
-SET "_BIN=$(OutDir)bin\$(TargetName)$(TargetExt)"
+SET "_BIN=$(OutDir)bin\$(PlatformTarget)\$(TargetName)$(TargetExt)"
 SET "_TDIR=$(ProjectDir)..\..\resources\test\"
 
 type "%_TDIR%words1"
