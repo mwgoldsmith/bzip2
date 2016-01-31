@@ -25,3 +25,4 @@ _ReSharper*/
 
 .vs/
 *.opendb
+*.sdf
