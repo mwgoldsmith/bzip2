@@ -191,7 +191,7 @@
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Lib>
@@ -238,7 +238,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -266,7 +266,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX64</TargetMachine>
@@ -312,7 +312,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -342,7 +342,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -398,7 +398,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -428,7 +428,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -483,7 +483,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -511,7 +511,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
@@ -563,7 +563,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -591,7 +591,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -641,7 +641,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -671,7 +671,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
@@ -733,7 +733,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
@@ -763,7 +763,7 @@ ENDLOCAL
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
       <ExceptionHandling>false</ExceptionHandling>
-      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4267;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <StringPooling>true</StringPooling>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -823,7 +823,7 @@ IF NOT EXIST "$(OutDir)..\..\include\$(ProjectName)" (
 
 FOR %%H IN (bzlib.h) DO (
   SET "_HEADER=%%H"
-  COPY "$(ProjectDir)..\..\include\$(ProjectName)\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
+  COPY "$(ProjectDir)..\..\include\!_HEADER!" "$(OutDir)..\..\include\$(ProjectName)"
 )
 
 IF NOT EXIST "$(OutDir)..\..\licenses" (
